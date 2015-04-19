@@ -15,13 +15,6 @@
        KIND, either express or implied.  See the License for the
        specific language governing permissions and limitations
        under the License.
-
-              str = "deviceID: " + checkValue(tm.getDeviceId()) + ","                    
-                    + "netCountry: " + checkValue(tm.getNetworkCountryIso()) + ","
-                    + "netName: " + checkValue(tm.getNetworkOperatorName()) + ","
-                    + "simNo: " + checkValue(tm.getSimSerialNumber()) + ","
-                    + "simCountry: " + checkValue(tm.getSimCountryIso()) + ","
-                    + "simName: " + checkValue(tm.getSimOperatorName());
 */
 package org.apache.cordova.device;
 
@@ -86,6 +79,10 @@ public class Device extends CordovaPlugin {
             r.put("manufacturer", this.getManufacturer());
             r.put("serial", this.getSerial());
             r.put("subscriberid", this.getSubscriberId());
+            r.put("imei", this.getDeviceId());
+            r.put("imsi", this.getSimSerialNumber());
+            r.put("operatorname", this.getNetworkOperatorName());
+            r.put("networktype", this.getNetworkType());
             callbackContext.success(r);
         }
         else {
@@ -143,10 +140,34 @@ public class Device extends CordovaPlugin {
         return serial;
     }
 
+    public String getDeviceId() {
+        TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String imei  = tm.getDeviceId();
+        return imei;
+    }
+    
     public String getSubscriberId() {
         TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
         String subscriberid  = tm.getSubscriberId();
         return subscriberid;
+    }
+    
+    public String getSimSerialNumber() {
+        TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String imsi  = tm.getSimSerialNumber();
+        return imsi;
+    }
+    
+    public String getNetworkOperatorName() {
+        TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String operatorname  = tm.getNetworkOperatorName();
+        return operatorname;
+    }
+    
+    public String getNetworkType() {
+        TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
+        String networktype  = tm.getNetworkType();
+        return networktype;
     }
     /**
      * Get the OS version.
