@@ -166,8 +166,8 @@ public class Device extends CordovaPlugin {
     
     public String getNetworkType() {
         TelephonyManager tm = (TelephonyManager) this.cordova.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        String networktype  = tm.getNetworkType();
-        return networktype;
+        int networktype  = tm.getNetworkType();
+        return String.valueOf(networktype);
     }
     /**
      * Get the OS version.
